@@ -1,15 +1,26 @@
-_loadObject = {
-	private _hraw = _this select 0;
-	private _layers = createHashMapFromArray (_this select 1);
+// Types should not be saved rather than saved but not loaded.
+// This list is for gradual upgrading from old save version to new load version.
+private _typesToIgnore = [
+    "HIG_mywall"
+];
     
+private _loadObject = {
+	private _hraw = _this select 0;
 	private _h = createHashMapFromArray _hraw;
+    
+    private _type = _h get "type";
+    if (_type in _typesToIgnore) then {
+        continue;
+    };
+    
+	private _layers = createHashMapFromArray (_this select 1);
     
 	private _rawType = _h get "kind";
     private _layerStr = _layers get _rawType;
     private _layerId = parseNumber _layerStr;
 
 	private _pos = _h get "pos";
-	private _o = create3DENEntity ["Object", _h get "type", _pos select 0, true];
+	private _o = create3DENEntity ["Object", _type, _pos select 0, true];
 	_o set3DENLayer _layerId;
     
     private _zNew = _pos select 0 select 2;
@@ -133,12 +144,63 @@ _get3denRotation = {
 	[_xRot, _yRot, _zRot];
 };
 
-_createStorageObject = {
+private _createKillPosSimpleObjects = {
     private _h = _this select 0;
-	private _layer = _this select 1;
+
+    private _blood = [
+        "a3\Props_F_Orange\Humanitarian\Garbage\BloodPool_01_Large_F",
+        "a3\Props_F_Orange\Humanitarian\Garbage\BloodPool_01_Medium_F",
+        "a3\Props_F_Orange\Humanitarian\Garbage\BloodSplatter_01_Large_F",
+        "a3\Props_F_Orange\Humanitarian\Garbage\BloodSplatter_01_Medium_F",
+        "a3\Props_F_Orange\Humanitarian\Garbage\BloodSplatter_01_Small_F",
+        "a3\Props_F_Orange\Humanitarian\Garbage\BloodTrail_01_F",
+        "a3\Props_F_Orange\Humanitarian\Garbage\BloodSpray_01_F"
+    ];
+
+    private _explosions = [
+        "a3\Props_F_Orange\Humanitarian\Garbage\BloodPool_01_Large_F",
+        "a3\Props_F_Orange\Humanitarian\Garbage\BloodPool_01_Medium_F",
+        "a3\Props_F_Orange\Humanitarian\Garbage\BloodSplatter_01_Large_F",
+        "a3\Props_F_Orange\Humanitarian\Garbage\BloodSplatter_01_Medium_F",
+        "a3\Props_F_Orange\Humanitarian\Garbage\BloodSplatter_01_Small_F",
+        "a3\Props_F_Orange\Humanitarian\Garbage\BloodTrail_01_F",
+        "a3\Props_F_Orange\Humanitarian\Garbage\BloodSpray_01_F"
+    ];
+
+    private _init = [];
+    _init pushBack "private _blood = objNull;";
     
-    private _o = create3DENEntity ["Object", "VR_3DSelector_01_default_F", [0,0,0], true];
-	_o set3DENLayer _layer;
+    private _cellWidth = getTerrainInfo # 2;
+    private _posInCell = createHashMap;
+
+    private _killPositions = _h get "kill_pos";
+    {
+        private _kph = createHashMapFromArray _x;
+        
+        private _pos = _kph get "pos";
+        private _z = getTerrainHeightASL _pos;// (_pos apply { _cellWidth * round (_x / _cellWidth) });
+
+        private _cellKey = format ["%1_%2", round ((_pos select 0) / 10.0), round ((_pos select 1) / 10.0)];
+        private _zOffset = _posInCell getOrDefault [_cellKey, 0];
+        _posInCell set [_cellKey, _zOffset + 1];
+
+        _pos set [2, _z + _zOffset * 0.001];
+
+        if (_kph get "man") then {
+            private _model = selectRandom _blood;
+            _init pushBack (format ["_blood = createSimpleObject ['%1', %2, true];", _model, _pos]);
+            _init pushBack (format ["_blood setDir %1;", random 360]);
+            _init pushBack (format ["_blood setVectorUp %1;", surfaceNormal _pos]);
+        } else {
+
+        };
+    } forEach _killPositions;
+
+    _init;
+};
+
+private _updateRootObject = {
+    private _h = _this select 0;
     
     private _storage = [
         ["players", _h get "players"]
@@ -147,21 +209,26 @@ _createStorageObject = {
 	private _init = [];
     private _initServerOnly = [];
     
+    _init pushBack "[this] call ZDO_fnc_initRootObject;";
     _init pushBack (format ["missionNamespace setVariable ['%1', '%2'];", "zdo_storage", str _storage]);
+    
+    _init pushBack (format ["this setVariable ['zdo_kill_pos', %1];", str (_h get "kill_pos")]);
+    _init append ([_h] call _createKillPosSimpleObjects);
     
     _initServerOnly pushBack (format ["private _map = %1;", _h get "map"]);
     _initServerOnly pushBack "_map call ZDO_fnc_pasteMarkers;";
-    
+
     if (count _initServerOnly > 0) then {
         _initServerOnly insert [0, ["if (isServer) then {"], false];
         _initServerOnly pushBack "};";
         _init append _initServerOnly;
     };
-	_o set3DENAttribute ["Init", _init joinString endl];
-    
-    _o set3DENAttribute ["enableSimulation", false];
-    _o set3DENAttribute ["allowDamage", false];
-    _o set3DENAttribute ["hideObject", true];
+
+    private _zdo_root = (("VR_3DSelector_01_default_F" allObjects 0) select { (_x get3DENAttribute "Name") isEqualTo ["zdo_root"] }) select 0;
+    if (isNull _zdo_root) then {
+        throw "Cannot find zdo_root";
+    };
+	_zdo_root set3DENAttribute ["Init", _init joinString endl];
 };
 
 _loadMines = {
@@ -209,8 +276,7 @@ private _objects = _h get "objects";
     [_x, _layers] call _loadObject;
 } forEach _objects;
 
-private _layerUtil = _layerRoot add3DENLayer "Util";
-[_h, _layerUtil] call _createStorageObject;
+[_h] call _updateRootObject;
 
 private _layerMines = _layerRoot add3DENLayer "Mines";
 [_h, _layerMines] call _loadMines;

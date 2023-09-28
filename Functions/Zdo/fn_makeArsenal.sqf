@@ -32,7 +32,7 @@ private _actionOpen = ["zdo_openArsenal", "Open ACE Arsenal","",{
 
 private _actionMove = ["zdo_moveFromVehicle", "Take items from vehicles (&lt;10m)","",{
     private _box = _target;
-    private _nearCars = (getPos _box) nearEntities [["Air", "Car", "Armored"], 10];
+    private _nearCars = (getPos _box) nearEntities [["Air", "Car", "Armored", "Motorcycle", "Tank"], 10];
 
     private _existingIds = [_box] call ZDO_fnc_serializeContainer;
     private _idsToAdd = [];

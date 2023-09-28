@@ -23,6 +23,14 @@ This is how it is supposed to be used:
 - create a new mission in 3den however you want
 - place the whole directory near `mission.sqm`
     - if you have files to replace like `initPlayerLocal.sqf` and others - manually merge the content instead.
+- create `VR Selector` object (blue one, `VR_3DSelector_01_default_F`)
+    - name it `zdo_root`
+    - add to Init:
+
+    ```
+    [this] call ZDO_fnc_initRootObject;
+    ```
+
 - that's it, the mission is ready to run
 - when mission is considered over and you want to "record the effects" - before players log out and mission complete is shown - in the debug console execute
 
@@ -127,7 +135,7 @@ While looking at a vehicle, player can select ACE Self-Interact option to put fl
 
 While looking at a vehicle, player can choose to gather loot to it.
 
-<img src="doc/gatherloot.png" width="400"/>
+<img src="doc/gatherloot.png" width="600"/>
 
 Why I decided to implement it?
 
@@ -175,6 +183,20 @@ Here is how you do it:
 - when player ACE-interact with the container, there will be a corresponding option which opens full ACE Arsenal
 - when player closes arsenal, the chosen gear is put in the wishbox.
 
+## Blood splatter
+
+`zdo_root` object tracks kills. Whenever entity is killed, the position gets recorded.
+
+When the save is loaded in 3den, `zdo_root` init part gets updated. Remember you created an object and put `ZDO_fnc_initRootObject` in it? Now, there is a lot of stuff being added after this line.
+
+For each kill, a `simpleobject` is created with a blood splatter. Basically, when next mission is started, every player is going to see where were the most kills on the map.
+
+Example of a fight in Livonia:
+
+![blood](doc/blood.png)
+
+The cap is 100.
+
 ## Tips and tricks
 
 - in 3den, when you have one "Loaded" layer and you load another one - do not delete the obsolete layer using `DEL` on keyboard because sometimes is messes up the selection and deletes another random object (I suspect bug in 3den). Instead, right click and delete the old layer.
@@ -184,8 +206,11 @@ Here is how you do it:
 ## Known issues
 
 - when player logs in - they get a saved loadout
-- then player changes items and logs out
-- then player logs back in - instead of getting loadout from step 2 they get saved loadout
+    - then player changes items and logs out
+    - then player logs back in - instead of getting loadout from step 2 they get saved loadout
+
+- when player joins in progress, the crate that was made an arsenal in this session is not synchronized as arsenal.
+    - inventory is synchronized OK, player just cannot "Open as Arsenal" on it.
 
 # Contributing
 

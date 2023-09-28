@@ -17,3 +17,6 @@ private _items = [
     "CamoNet_wdl_open_F"
 ];
 [resistance, -1, _items apply {[_x, 5]}] call ace_fortify_fnc_registerObjects;
+
+west setFriend [resistance, 1];
+east setFriend [resistance, 0];

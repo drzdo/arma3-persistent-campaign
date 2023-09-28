@@ -10,6 +10,7 @@ class CfgFunctions
 			class copyMapMarkers {};
 			class deleteAllMapMarkers {};
             class gatherLoot {};
+            class initRootObject {};
             class isBackpack {};
 			class loadPlayerGear {};
             class loadToEden {};

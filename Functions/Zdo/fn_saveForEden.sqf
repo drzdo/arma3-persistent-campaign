@@ -6,7 +6,8 @@ private _saveIfNeeded = {
         "ACE_Rallypoint_East_Base",
         "ACE_Rallypoint_Independent_Base",
         "VR_3DSelector_01_default_F",
-        "UserTexture1m_F"
+        "UserTexture1m_F",
+        "HIG_mywall"
     ];
     private _typesToSave = [
         "ACE_Rallypoint_West",
@@ -166,5 +167,6 @@ private _storage = call ZDO_fnc_storage;
     ["players", [_storage] call _savePlayersLoadouts],
     ["mines", call _saveMines],
     ["map", call ZDO_fnc_copyMapMarkers],
-    ["save_time", format (["%1-%2-%3-%4-%5-%6"] + systemTimeUTC)]
+    ["save_time", format (["%1-%2-%3-%4-%5-%6"] + systemTimeUTC)],
+    ["kill_pos", zdo_root getVariable ["zdo_kill_pos", []]]
 ];
