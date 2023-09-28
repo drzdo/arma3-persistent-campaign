@@ -22,7 +22,7 @@ This is how it is supposed to be used:
 - place the whole directory near `mission.sqm`
     - if you have files to replace like `initPlayerLocal.sqf` and others - manually merge the content instead.
 - that's it, the mission is ready to run
-- when mission is over and you want to "record the effects" - in the debug console execute
+- when mission is considered over and you want to "record the effects" - before players log out and mission complete is shown - in the debug console execute
 
     ```
 	private _r = [] call ZDO_fnc_saveForEden;
@@ -36,6 +36,9 @@ This is how it is supposed to be used:
     [["objects",[[["kind","th"],["type","Land_WoodenCrate_01_F"],["pos"<...>
     ```
     
+    It means that the content is saved.
+    
+- then you are good to close the mission and players to log out
 - go to 3den, open the mission file, open debug console and load the saved data by executing
 
     ```
@@ -90,7 +93,13 @@ Therefore, there is a way to make this container "an arsenal".
 
 ## Make crate an arsenal
 
-When admin is looking at a crate, in ACE Self-Interact menu there will be an option to make this crate an arsenal. When you do that:
+When admin is looking at a crate, in ACE Self-Interact menu there will be an option to make this crate an arsenal - or you can execute
+
+```
+[cursorTarget] call ZDO_fnc_makeArsenalGlobal;
+```
+
+When you do that:
 
 - this crate gets an ACE Interact option to open an ACE Arsenal
 - ACE Arsenal is bound to the crate's content (if there is at least one item of any type - it will appear in the Arsenal)
@@ -101,14 +110,8 @@ When player is looking at this crate, there is an option to load items from near
 Why I decided to implement this arsenal?
 
 - using just inventory is not so visually stimulating for players, arsenal is better in this regard
-- using unlimited arsenal has too many options (especially, if you are using 3CB Factions)
-- using limited arsenal (like the one in Antistasi) implies grind which can make game boring. Hey, you got 10 AKs, but you've died 10 times assaulting the outpost, now go get 10 more AKs. Nah, boring.
-
-By the way, same effect can be achieved by looking at a crate and executing
-
-```
-[cursorTarget] call ZDO_fnc_makeArsenalGlobal;
-```
+- using unlimited arsenal provides too many options (especially, if you are using something like 3CB Factions)
+- using limited arsenal (like the one in Antistasi) implies grind which can make the game boring. Hey, you got 10 AKs, but you've died 10 times assaulting the outpost, now go get 10 more AKs. Nah, boring.
 
 ## Flag
 
@@ -146,7 +149,7 @@ If you have more than two people playing - it becomes tedious, Zeus becomes a bo
 
 Yeah, kind of Antistasi way. But if this is your third outpost - the loot will be pretty much the same as for previous two ones.
 
-*Option D:* The way I see this:
+*Option D:* The way I implemented this:
 
 - Zeus spawns a crate (wishbox)
 - Players temporarily get full ACE Arsenal
@@ -170,58 +173,18 @@ Here is how you do it:
 - when player ACE-interact with the container, there will be a corresponding option which opens full ACE Arsenal
 - when player closes arsenal, the chosen gear is put in the wishbox.
 
+## Tips and tricks
+
+- in 3den, when you have one "Loaded" layer and you load another one - do not delete the obsolete layer using `DEL` on keyboard because sometimes is messes up the selection and deletes another random object (I suspect bug in 3den). Instead, right click and delete the old layer.
+
+## Known issues
+
+- when player logs in - they get a saved loadout
+- then player changes items and logs out
+- then player logs back in - instead of getting loadout from step 2 they get saved loadout
+
 # Contributing
 
 Contributions are welcome.
 
-You are allowed to use these scripts and distribute them in your own missions. The only requirement is to mentioned the link to this repository.
-
-
-
-
-- all vehicles
-    - inventories (items in nested containers are put in the root container)
-    - colors
-    - damage
-    - flag (use ACE Self-Interact to set flag)
-- all inventory objects (crates, supply boxes, etc)
-    - inventories (items in nested containers are put in the root container)
-    - damage
-- statics (sandbags, ACE trenches, ACE Fortify)
-- players
-    - locations
-    - loadouts
-- mines
-- arsenal
-    - synced with actual inventory
-- map markers
-- wishbox
-
-- flag, rally point
-- warlords
-
-Tips:
-
-- delete old layer via right click "Delete" instead of pressing "Delete" button
-
-- Admin tools:
-
-- For save/load in debug panel:
-
-if (is3DEN) then {
-	private _s = profileNamespace getVariable ["zdo_mission", ""];
-	if (!(_s isEqualTo "")) then {
-		private _v = parseSimpleArray _s;
-		[_v] call ZDO_fnc_loadToEden;
-		_v;
-	};
-} else {
-	private _r = [] call ZDO_fnc_saveForEden;
-	profileNamespace setVariable ["zdo_mission", str _r];
-	_r;
-};
-
-
-- wishbox
-
-[cursorTarget] call ZDO_fnc_makeWishbox;
+You are allowed to use these scripts and distribute them in your own missions. The only request is to mention the link to this repository.
