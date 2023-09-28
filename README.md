@@ -4,7 +4,7 @@
 
 These are scripts that I use in Arma 3 missions to make them feel **persistent**.
 
-<img src="doc/top.png" width="400"/>
+<img src="doc/top.png" width="600"/>
 
 Basically, the **effects from previous mission are moved to the next mission**. By effects I mean:
 
