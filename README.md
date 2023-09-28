@@ -24,8 +24,9 @@ This is how it is supposed to be used:
 - place the whole directory near `mission.sqm`
     - if you have files to replace like `initPlayerLocal.sqf` and others - manually merge the content instead.
 - create `VR Selector` object (blue one, `VR_3DSelector_01_default_F`)
-    - name it `zdo_root`
-    - add to Init:
+    - name it `zdo_root` - this is important
+    - disable "Show Model", "Enable Simulation", "Enable Damage"
+    - add this line to its Init:
 
     ```
     [this] call ZDO_fnc_initRootObject;

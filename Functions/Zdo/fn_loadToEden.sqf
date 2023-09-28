@@ -158,13 +158,6 @@ private _createKillPosSimpleObjects = {
     ];
 
     private _explosions = [
-        "a3\Props_F_Orange\Humanitarian\Garbage\BloodPool_01_Large_F",
-        "a3\Props_F_Orange\Humanitarian\Garbage\BloodPool_01_Medium_F",
-        "a3\Props_F_Orange\Humanitarian\Garbage\BloodSplatter_01_Large_F",
-        "a3\Props_F_Orange\Humanitarian\Garbage\BloodSplatter_01_Medium_F",
-        "a3\Props_F_Orange\Humanitarian\Garbage\BloodSplatter_01_Small_F",
-        "a3\Props_F_Orange\Humanitarian\Garbage\BloodTrail_01_F",
-        "a3\Props_F_Orange\Humanitarian\Garbage\BloodSpray_01_F"
     ];
 
     private _init = [];
@@ -192,7 +185,7 @@ private _createKillPosSimpleObjects = {
             _init pushBack (format ["_blood setDir %1;", random 360]);
             _init pushBack (format ["_blood setVectorUp %1;", surfaceNormal _pos]);
         } else {
-
+            // TODO
         };
     } forEach _killPositions;
 
@@ -216,7 +209,7 @@ private _updateRootObject = {
     _init append ([_h] call _createKillPosSimpleObjects);
     
     _initServerOnly pushBack (format ["private _map = %1;", _h get "map"]);
-    _initServerOnly pushBack "_map call ZDO_fnc_pasteMarkers;";
+    _initServerOnly pushBack "_map call ZDO_fnc_pasteMapMarkers;";
 
     if (count _initServerOnly > 0) then {
         _initServerOnly insert [0, ["if (isServer) then {"], false];
