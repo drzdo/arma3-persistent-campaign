@@ -1,0 +1,32 @@
+class CfgFunctions
+{
+	class TAG_Zdo
+	{
+        tag = "ZDO";
+		class Zdo
+		{
+			file = "Functions\Zdo";
+            
+			class copyMapMarkers {};
+			class deleteAllMapMarkers {};
+            class gatherLoot {};
+            class isBackpack {};
+			class loadPlayerGear {};
+            class loadToEden {};
+			class makeArsenal {};
+			class makeArsenalGlobal {};
+            class makeWishbox {};
+            class makeWishboxGlobal {};
+            class pasteMapMarkers {};
+            class saveForEden {};
+            class serializeContainer {};
+            class storage {};
+		};
+	};
+};
+
+Respawn = 3;											
+RespawnDelay = 10;										
+RespawnDialog = 1;										
+respawnOnStart = 0;                                     
+respawnTemplates[] = {"MenuInventory", "MenuPosition"};
