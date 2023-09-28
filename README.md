@@ -198,13 +198,27 @@ Example of a fight in Livonia:
 
 The cap is 100.
 
-## Tips and tricks
+## ACE Fortify
+
+There is a custom ACE Fortify setup in `initServer.sqf`.
+
+All placed objects are saved.
+
+To remove them player can self-interact and pick "Delete this object".
+
+Example of a garrisoned house that was a good defense position for a long time:
+
+![fortify](doc/fortify.png)
+
+---
+
+# Tips and tricks
 
 - in 3den, when you have one "Loaded" layer and you load another one - do not delete the obsolete layer using `DEL` on keyboard because sometimes is messes up the selection and deletes another random object (I suspect bug in 3den). Instead, right click and delete the old layer.
 
 - you can play in ChernarusAutumn, save the game, and load it in ChernarusWinter and continue there!
 
-## Known issues
+# Known issues
 
 - when player logs in - they get a saved loadout
     - then player changes items and logs out
