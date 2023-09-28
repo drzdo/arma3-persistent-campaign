@@ -4,6 +4,8 @@
 
 These are scripts that I use in Arma 3 missions to make them feel **persistent**.
 
+<img src="doc/top.png" width="400"/>
+
 Basically, the **effects from previous mission are moved to the next mission**. By effects I mean:
 
 - vehicles (positions, damage, inventory, fuel, textures, flags)
@@ -176,6 +178,8 @@ Here is how you do it:
 ## Tips and tricks
 
 - in 3den, when you have one "Loaded" layer and you load another one - do not delete the obsolete layer using `DEL` on keyboard because sometimes is messes up the selection and deletes another random object (I suspect bug in 3den). Instead, right click and delete the old layer.
+
+- you can play in ChernarusAutumn, save the game, and load it in ChernarusWinter and continue there!
 
 ## Known issues
 
