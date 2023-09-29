@@ -36,11 +36,14 @@ private _loadObject = {
 	private _initGlobal = [];
     private _initServerOnly = [];
     
-    _initServerOnly pushBack "clearItemCargoGlobal this;";
-    _initServerOnly pushBack "clearBackpackCargoGlobal this;";
-    _initServerOnly pushBack "clearMagazineCargoGlobal this;";
-    _initServerOnly pushBack "clearWeaponCargoGlobal this;";
-    
+    private _hasInventory = _o canAdd "FirstAidKit";
+    if (_hasInventory) then {
+        _initServerOnly pushBack "clearItemCargoGlobal this;";
+        _initServerOnly pushBack "clearBackpackCargoGlobal this;";
+        _initServerOnly pushBack "clearMagazineCargoGlobal this;";
+        _initServerOnly pushBack "clearWeaponCargoGlobal this;";
+    };
+
     private _attrsRaw = _h get "attrs";
     if (typeName _attrsRaw == "ARRAY") then {
         {
@@ -59,8 +62,15 @@ private _loadObject = {
 		_o forceFlagTexture _flag;
         _initGlobal pushBack (format ['this forceFlagTexture "%1";', _flag]);
 	};
+
+    if (_rawType == "bu") then {
+        if ((_o isKindOf "Ruins") && (_o isKindOf "HouseBase")) then {
+            _initServerOnly pushBack "(nearestBuilding getPosATL this) setDamage [1, false];";
+            _initServerOnly pushBack "deleteVehicle this;";
+        };
+    };
 	
-	if (_rawType == "bu" || _rawType == "th") then {
+	if (_rawType == "bu" || _rawType == "th" || _rawType == "fl") then {
 		_o set3DENAttribute ["Health", 1.0 - (_h get "damage")];
 	};
     
@@ -100,6 +110,12 @@ private _loadObject = {
 			_texi = _texi + 1;
 		} forEach _tex;
 	};
+
+    if (_rawType == "fl") then {
+        private _phase = _h getOrDefault ["flagPhase", 0];
+        _o animateSource ["Flag_source", _phase, true];
+        _initServerOnly pushBack (format ['this animateSource ["Flag_source", %1, true];', _phase]);
+    };
 	
     private _init = [];
     _init append _initGlobal;
@@ -163,7 +179,6 @@ private _createKillPosSimpleObjects = {
     private _init = [];
     _init pushBack "private _blood = objNull;";
     
-    private _cellWidth = getTerrainInfo # 2;
     private _posInCell = createHashMap;
 
     private _killPositions = _h get "kill_pos";
@@ -171,7 +186,7 @@ private _createKillPosSimpleObjects = {
         private _kph = createHashMapFromArray _x;
         
         private _pos = _kph get "pos";
-        private _z = getTerrainHeightASL _pos;// (_pos apply { _cellWidth * round (_x / _cellWidth) });
+        private _z = getTerrainHeightASL _pos;
 
         private _cellKey = format ["%1_%2", round ((_pos select 0) / 10.0), round ((_pos select 1) / 10.0)];
         private _zOffset = _posInCell getOrDefault [_cellKey, 0];
@@ -204,8 +219,18 @@ private _updateRootObject = {
     
     _init pushBack "[this] call ZDO_fnc_initRootObject;";
     _init pushBack (format ["missionNamespace setVariable ['%1', '%2'];", "zdo_storage", str _storage]);
+
+    if ("root_attrs" in _h) then {
+        private _rootAttrs = _h get "root_attrs";
+        {
+            _initServerOnly pushBack (format [
+                "this setVariable ['%1', %2, true];",
+                _x select 0,
+                str (_x select 1)
+            ]);
+        } forEach _rootAttrs;
+    };
     
-    _init pushBack (format ["this setVariable ['zdo_kill_pos', %1];", str (_h get "kill_pos")]);
     _init append ([_h] call _createKillPosSimpleObjects);
     
     _initServerOnly pushBack (format ["private _map = %1;", _h get "map"]);
@@ -261,7 +286,8 @@ private _layerRoot = -1 add3DENLayer (format ["Loaded %1", _h get "save_time"]);
 private _layers = [
     ["ve", str (_layerRoot add3DENLayer "Vehicles")],
     ["bu", str (_layerRoot add3DENLayer "Buildings")],
-    ["th", str (_layerRoot add3DENLayer "Things")]
+    ["th", str (_layerRoot add3DENLayer "Things")],
+    ["fl", str (_layerRoot add3DENLayer "Flags")]
 ];
 
 private _objects = _h get "objects";

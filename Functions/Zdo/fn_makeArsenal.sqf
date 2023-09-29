@@ -1,6 +1,11 @@
 params ["_box"];
 
 _box setMaxLoad 1000000;
+
+if (_box getVariable ["zdo_arsenal", ""] == "1") exitWith {
+    // Do not make it arsenal again.
+    0;
+};
    
 [_box, true] call ace_arsenal_fnc_removeBox;
 _box setVariable ["zdo_arsenal", "1"];

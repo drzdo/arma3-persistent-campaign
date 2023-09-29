@@ -1,0 +1,1 @@
+"SignAd_SponsorS_Quontrol_F";

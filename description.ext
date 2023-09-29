@@ -24,10 +24,68 @@ class CfgFunctions
             class storage {};
 		};
 	};
+	class TAG_ZdoGM
+	{
+        tag = "ZDOGM";
+		class Zdo
+		{
+			file = "Functions\ZdoGM";
+            
+            class createMapMarkers {};
+            class deleteAllSigns {};
+			class deleteOtherLayersWithSameSignType {};
+            class deleteOtherObjectsOfSameType {};
+            class findNearestSignOfType {};
+			class getGroupById {};
+            class initAceFortify {};
+            class isAnyPlayerInProximity {};
+        	class isZdoRootVarSet {};
+            class limitGroupVehicles {};
+            class log {};
+            class logClean {};
+			class moveGroupToPosition {};
+			class pickNRandomObjectsOfType {};
+            class pickOtherNRandomObjects {};
+			class pickOtherObjectsOfSameType {};
+			class runLambsAssault {};
+			class runLambsCamp {};
+			class runLambsCreep {};
+			class runLambsGarrison {};
+			class runLambsHunt {};
+			class runLambsPatrol {};
+			class runLambsRush {};
+			class runMove {};
+			class runSeekAndDestroy {};
+            class selectNRandom {};
+			class setAtEmptyPosition {};
+            class signArmex {};
+            class signBlueking {};
+            class signBurstkoke {};
+            class signIdap {};
+            class signIon {};
+			class signLarkin {};
+			class signQuontrol {};
+			class signRedburger {};
+			class signRedstone {};
+			class signSponsor {};
+			class signSuatmm {};
+			class signVrana {};
+			class spawnMapPositionTracker {};
+			class spawnTrigger {};
+			class teleportLayerObjectsAsWhole {};
+			class teleportLayerObjectsRandomly {};
+            class teleportToObject {};
+		};
+	};
 };
 
 Respawn = 3;											
-RespawnDelay = 10;										
+RespawnDelay = 5;										
 RespawnDialog = 1;										
 respawnOnStart = 0;                                     
-respawnTemplates[] = {"MenuInventory", "MenuPosition"};
+respawnTemplates[] = {};
+
+author = "Zdo";
+onLoadName		= "Livonia Campaign";
+onLoadMission	= "Yup, we are doing it.";
+briefingName = "TAG 1-5 CO My super mission";

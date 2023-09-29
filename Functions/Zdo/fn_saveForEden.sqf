@@ -29,6 +29,9 @@ private _saveIfNeeded = {
 	if (_objectType isEqualTo ["Object", "House"]) exitWith {
 		_this call _saveAsBuilding;	   
 	};
+    if (_type isEqualTo "PortableFlagPole_01_F") exitWith {
+		_this call _saveAsFlag;	   
+	};
 	if ((_objectType select 0) == "Vehicle") exitWith {
 		_this call _saveAsVehicle;
 	};
@@ -59,9 +62,9 @@ private _saveAsBuilding = {
         ["attrs", [_o] call _saveCustomAttrs]
 	];
 };
-private _saveAsVehicle = {
-	private _o = _this select 0;
-    
+
+private _getForcedFlagTextureName = {
+    params ["_o"];
     private _flag = toLower (getForcedFlagTexture _o);
     if (count _flag > 0) then {
         private _root = toLower (getMissionPath "");
@@ -70,7 +73,26 @@ private _saveAsVehicle = {
             _flag = _flag select [count _root];
         };
     };
-    
+    _flag;
+};
+
+private _saveAsFlag = {
+	_o = _this select 0;
+	[
+		["kind", "fl"],
+		["type", typeOf _o],
+		["pos", [getPosATL _o, vectorDir _o, vectorUp _o]],
+		["damage", damage _o],
+		["tex", getObjectTextures _o],
+        ["attrs", [_o] call _saveCustomAttrs],
+        ["flag", [_o] call _getForcedFlagTextureName],
+        ["flagPhase", _o animationSourcePhase "Flag_source"]
+	];
+};
+
+private _saveAsVehicle = {
+	private _o = _this select 0;
+
 	[
 		["kind", "ve"],
 		["type", typeOf _o],
@@ -80,7 +102,7 @@ private _saveAsVehicle = {
 		["container", [_o] call ZDO_fnc_serializeContainer],
 		["tex", getObjectTextures _o],
         ["attrs", [_o] call _saveCustomAttrs],
-        ["flag", _flag]
+        ["flag", [_o] call _getForcedFlagTextureName]
 	];
 };
 private _saveAsThing = {
@@ -129,6 +151,7 @@ private _savePlayersLoadouts = {
     {
         _players set [name _x, [
             ["pos", getPosATL _x],
+            ["dir", getDir _x],
             ["gear", getUnitLoadout _x]
         ]];
     } forEach allPlayers;
@@ -168,5 +191,6 @@ private _storage = call ZDO_fnc_storage;
     ["mines", call _saveMines],
     ["map", call ZDO_fnc_copyMapMarkers],
     ["save_time", format (["%1-%2-%3-%4-%5-%6"] + systemTimeUTC)],
-    ["kill_pos", zdo_root getVariable ["zdo_kill_pos", []]]
+    ["kill_pos", zdo_root getVariable ["zdo_kill_pos", []]],
+    ["root_attrs", [zdo_root] call _saveCustomAttrs]
 ];

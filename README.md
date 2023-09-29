@@ -163,14 +163,13 @@ Yeah, kind of Antistasi way. But if this is your third outpost - the loot will b
 *Option D:* The way I implemented this:
 
 - Zeus spawns a crate (wishbox)
-- Players ACE-interact with that crate and temporarily get full ACE Arsenal
-- They select the gear that they want to see in the outpost as a "trophy"
+- Players temporarily get full ACE Arsenal
+- They select the gear that they want to see in the outpost
     - Zeus may verbally impose some limitations
 - When they are done with it, they original loadout is restored
 - And whatever they have selected in ACE Arsenal gets added to the crate
 - Zeus potentially adds something cool to it
-- Zeus moves crate to the enemy base
-- players go fight for the stuff they have personally picked
+- Zeus moves crate to the enemy base.
 
 Here is how you do it:
 
@@ -193,7 +192,7 @@ When the save is loaded in 3den, `zdo_root` init part gets updated. Remember you
 
 For each kill, a `simpleobject` is created with a blood splatter. Basically, when next mission is started, every player is going to see where were the most kills on the map.
 
-Example of a fight in Livonia (left) and how it looks like (right) when it was saved, loaded to 3den and opened in a new mission based on that save:
+Example of a fight in Livonia:
 
 ![blood](doc/blood.png)
 

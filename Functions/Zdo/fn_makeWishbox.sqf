@@ -1,7 +1,13 @@
 params ["_box"];
 
 _box setMaxLoad 1000000; 
- 
+
+if (_box getVariable ["zdotmp_wishbox", ""] == "1") exitWith {
+    // Do not make it wishbox again.
+    0;
+};
+_box setVariable ["zdotmp_wishbox", "1"];
+
 private _actionWishbox = ["zdo_wishboxSaveLoadout", "Make a wish with ACE Arsenal","",{ 
     _box = _target; 
     _loadout = (getUnitLoadout player); 

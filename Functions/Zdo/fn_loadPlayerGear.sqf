@@ -8,6 +8,7 @@ if ("players" in _storage) then {
     if (typeName _playerInfo == "ARRAY") then {
         private _playerInfoH = createHashMapFromArray _playerInfo;
         _player setPosATL (_playerInfoH get "pos");
+        _player setDir (_playerInfoH getOrDefault ["dir", 0]);
         _player setUnitLoadout (_playerInfoH get "gear");
     };
 };
