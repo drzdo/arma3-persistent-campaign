@@ -10,7 +10,66 @@ call ZDOGM_fnc_initAceFortify;
 call ZDOGM_fnc_logClean;
 
 try {
+    // Vars.
+    intel_laptop;
+    group_qrf_red;
+    group_help;
+    // armex
 
+    // Init.
+    private _signsIntel = [call ZDOGM_fnc_signArmex, -1] call ZDOGM_fnc_pickNRandomObjectsOfType;
+    private _signIntel = selectRandom _signsIntel;
+    ["intel_src", "intel_dst", _signIntel] call ZDOGM_fnc_teleportLayerObjectsToSameObjectInOtherLayerNearSign;
+
+    {
+        [_x, 1, 1] call ZDOGM_fnc_limitGroupVehicles;
+    } forEach allGroups;
+
+    private _traitorGroupIds = [_signIntel, 50] call ZDOGM_fnc_findGroupIdsInProximity;
+    private _traitors = [];
+    {
+        private _g = _x call ZDOGM_fnc_getGroupById;
+        _traitors append (units _g);
+    } forEach _traitorGroupIds;
+
+    private _distanceToTrigger = [10, 70] call BIS_fnc_randomInt;
+    
+    private _groupIdQrfRed = groupId group group_qrf_red;
+    private _groupIdHelp = groupId group group_help;
+
+    // Lambs.
+    {
+        private _sign = _x;
+        private _groupIds = [_sign, 50] call ZDOGM_fnc_findGroupIdsInProximity;
+        {
+            private _g = _x call ZDOGM_fnc_getGroupById;
+            [_g, getPosATL _sign, true] call ZDOGM_fnc_runLambsGarrison;
+        } forEach _groupIds;
+    } forEach _signsIntel;
+
+    [4, [_distanceToTrigger, _traitors, _groupIdQrfRed, _groupIdHelp], {
+        params ["_distanceToTrigger", "_traitors", "_groupIdQrfRed", "_groupIdHelp"];
+        
+        private _close = [intel_laptop, _distanceToTrigger] call ZDOGM_fnc_isAnyPlayerInProximity;
+        if (_close || (["zdo_intel"] call ZDOGM_fnc_isZdoRootVarSet)) then {            
+            private _enemyGroup = createGroup east;
+            _traitors joinSilent _enemyGroup;
+
+            [
+                _groupIdQrfRed call ZDOGM_fnc_getGroupById,
+                getPosATL intel_laptop
+            ] call ZDOGM_fnc_runSeekAndDestroy;
+
+            [
+                _groupIdHelp call ZDOGM_fnc_getGroupById,
+                getPosATL intel_laptop
+            ] call ZDOGM_fnc_runSeekAndDestroy;
+
+            false;
+        } else {
+            true;
+        };
+    }] call ZDOGM_fnc_spawnTrigger;
 
     // private _laptopProbs = [laptop, 2] call ZDOGM_fnc_pickOtherNRandomObjects;
     // [_laptopProbs, "Laptop?", "ColorBlue"] call ZDOGM_fnc_createMapMarkers;
@@ -74,10 +133,12 @@ try {
     //     ["radius", 0]
     // ]] call ZDOGM_fnc_spawnMapPositionTracker;
 
-    // // Cleanup.
+    // ------------- Cleanup.
     // [laptop] call ZDOGM_fnc_deleteOtherObjectsOfSameType;
+
+    ["intel_dst"] call ZDOGM_fnc_deleteWholeLayer;
     
-    // call ZDOGM_fnc_deleteAllSigns;
+    call ZDOGM_fnc_deleteAllSigns;
     // [true] call ZDOGM_fnc_deleteAllSigns; // debug
 } catch {
     ["ERROR %1", str _exception] call ZDOGM_fnc_log;

@@ -1,3 +1,3 @@
 params ["_name"];
 
-(zdo_root getVariable [_name, "__NOT__SET__"]) != "__NOT__SET__";
+!((zdo_root getVariable [_name, "__NOT__SET__"]) isEqualTo "__NOT__SET__");

@@ -35,6 +35,8 @@ class CfgFunctions
             class deleteAllSigns {};
 			class deleteOtherLayersWithSameSignType {};
             class deleteOtherObjectsOfSameType {};
+            class deleteWholeLayer {};
+			class findGroupIdsInProximity {};
             class findNearestSignOfType {};
 			class getGroupById {};
             class initAceFortify {};
@@ -56,6 +58,7 @@ class CfgFunctions
 			class runLambsRush {};
 			class runMove {};
 			class runSeekAndDestroy {};
+			class runSeekAndDestroyFrom {};
             class selectNRandom {};
 			class setAtEmptyPosition {};
             class signArmex {};
@@ -75,6 +78,7 @@ class CfgFunctions
 			class teleportLayerObjectsAsWhole {};
 			class teleportLayerObjectsRandomly {};
             class teleportToObject {};
+			class teleportLayerObjectsToSameObjectInOtherLayerNearSign {};
 		};
 	};
 };

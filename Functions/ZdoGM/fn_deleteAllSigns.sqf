@@ -10,7 +10,7 @@ private _types = [
 {
 	private _objs = (_x allObjects 0);
 	{
-		if (!(isNil {_debug}) && _debug == true) then {
+		if (_debug == true) then {
 			_x hideObjectGlobal true;
 			_x enableSimulationGlobal false;
 			_x allowDamage false;

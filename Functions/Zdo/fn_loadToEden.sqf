@@ -49,11 +49,12 @@ private _loadObject = {
         {
             private _k = _x select 0;
             private _v = _x select 1;
-            _initGlobal pushBack (format ['this setVariable ["%1", "%2"];', _k, _v]);
-            
+
             if ((_k isEqualTo "zdo_arsenal") && (_v isEqualTo "1")) then {
                 _initGlobal pushBack (format ['[this] call ZDO_fnc_makeArsenal;']);
             };
+
+            _initGlobal pushBack (format ['this setVariable ["%1", "%2"];', _k, _v]);
         } forEach _attrsRaw;
     };
     
@@ -218,7 +219,6 @@ private _updateRootObject = {
     private _initServerOnly = [];
     
     _init pushBack "[this] call ZDO_fnc_initRootObject;";
-    _init pushBack (format ["missionNamespace setVariable ['%1', '%2'];", "zdo_storage", str _storage]);
 
     if ("root_attrs" in _h) then {
         private _rootAttrs = _h get "root_attrs";
@@ -230,11 +230,13 @@ private _updateRootObject = {
             ]);
         } forEach _rootAttrs;
     };
-    
+
+    _init pushBack (format ["missionNamespace setVariable ['%1', '%2'];", "zdo_storage", str _storage]);
+
     _init append ([_h] call _createKillPosSimpleObjects);
     
     _initServerOnly pushBack (format ["private _map = %1;", _h get "map"]);
-    _initServerOnly pushBack "_map call ZDO_fnc_pasteMapMarkers;";
+    _initServerOnly pushBack "_map call ZDO_fnc_pasteMapMarkers;";    
 
     if (count _initServerOnly > 0) then {
         _initServerOnly insert [0, ["if (isServer) then {"], false];
