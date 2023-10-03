@@ -1,0 +1,1 @@
+["SignAd_SponsorS_ARMEX_F", "SignAd_Sponsor_ARMEX_F"];

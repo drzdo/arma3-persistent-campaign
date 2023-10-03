@@ -1,1 +1,0 @@
-"SignAd_SponsorS_01_IDAP_F";

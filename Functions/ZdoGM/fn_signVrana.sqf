@@ -1,1 +1,0 @@
-"SignAd_SponsorS_Vrana_F";

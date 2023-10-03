@@ -1,0 +1,1 @@
+profileNamespace getVariable ["zdo_log", []];

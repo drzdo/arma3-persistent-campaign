@@ -1,1 +1,0 @@
-"SignAd_SponsorS_ION_F";

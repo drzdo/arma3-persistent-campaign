@@ -1,0 +1,1 @@
+["WALL", "FENCE", "TREE", "SMALL TREE", "POWER LINES", "BUSH"];

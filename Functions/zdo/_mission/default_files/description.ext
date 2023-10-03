@@ -9,8 +9,3 @@ respawnTemplates[] = {};
 joinUnassigned = 0;
 briefing = 0;
 debriefing = 0;
-
-author = "Zdo";
-onLoadName = "Test Persistent Mission";
-onLoadMission = "Yup, we are doing it.";
-briefingName = "Wow yeah";
