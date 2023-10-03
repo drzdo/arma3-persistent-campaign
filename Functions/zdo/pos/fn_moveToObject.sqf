@@ -1,4 +1,4 @@
-params ["_objectToTeleport", "_targetPositionObject"];
+params ["_objectToTeleport", "_targetPositionObject", ["_shiftZ", 0.2]];
 
 private _pos = getPosATL _targetPositionObject;
 
@@ -15,7 +15,7 @@ _targetPositionObject enableSimulationGlobal false;
 _targetPositionObject allowDamage false;
 
 // Shift slightly above the placed position to avoid physics glitches.
-_pos set [2, (_pos select 2) + 0.2];
+_pos set [2, (_pos select 2) + _shiftZ];
 
 _objectToTeleport setPosATL _pos;
 _objectToTeleport setDir (getDir _targetPositionObject);

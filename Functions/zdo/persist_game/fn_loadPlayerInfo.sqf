@@ -7,11 +7,11 @@ params ["_player"];
 
 private _tracker = ["zdo_player_info_tracker"] call zdo_persist_game_fnc_getOrCreateMarkedObject;
 
-    private _playersRaw = _tracker getVariable ["zdo_players", []];
+private _playersRaw = _tracker getVariable ["zdo_players", []];
 private _playersH = createHashMapFromArray _playersRaw;
 
-private _playerInfo = _playersH get (name _player);
-if (typeName _playerInfo == "ARRAY") then {
+private _playerInfo = _playersH getOrDefault [name _player, []];
+if (count _playerInfo > 0) then {
     private _playerInfoH = createHashMapFromArray _playerInfo;
 
     _player setPosATL (_playerInfoH get "pos");
