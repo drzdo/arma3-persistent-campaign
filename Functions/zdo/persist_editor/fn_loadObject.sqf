@@ -67,6 +67,18 @@ if (_rawType == "bu") then {
 
 if (_rawType == "bu" || _rawType == "th" || _rawType == "fl") then {
 	_o set3DENAttribute ["Health", 1.0 - (_h get "damage")];
+
+	private _typesToMakeSimpleObject = [
+		"BloodPool_01_Large_New_F",
+		"BloodSplatter_01_Large_New_F"
+	];
+	if (_type in _typesToMakeSimpleObject) then {
+		_o set3DENAttribute ["enableSimulation", false];
+		_o set3DENAttribute ["allowDamage", false];
+
+		// This does not seem to have an effect but still simulation is disabled.
+		_o set3DENAttribute ["objectIsSimple", true];
+	};
 };
 
 if (_rawType == "ve" || _rawType == "th") then {
