@@ -17,6 +17,14 @@ Basically, the **effects from previous mission are moved to the next mission**. 
 - ACE rallypoint position
 - ACE trenches, ACE Fortify statics, any buildings placed by Zeus (technically, almost any static which are considered "Things" in Arma)
 - ruined buildings, fences, trees
+- all units (positions, loadout, ACE medical, roles in vehicles).
+
+Also, I've integrated `ROS AI Revive Demo and script v4.0` written by `Rickoshay` https://steamcommunity.com/sharedfiles/filedetails/?id=2967824861 (big kudos!) and made couple of custom changes in there:
+
+- previously, AI was only reviving the same team the player is in. Now, OPFOR AI can also revive other OPFOR AI.
+- when AI revives another AI or player, ACE medical is still the thing. Now, after reviving, all wounds get bandaged, blood is restored. The only things to manually take care of are fractures, stitching (if enabled) and pain.
+
+This makes friendly AI more helpful in battles and enemy AI more dangerous.
 
 # Documentation
 

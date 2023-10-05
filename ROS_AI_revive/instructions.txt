@@ -1,0 +1,41 @@
+ROS_AI_Revive system v4.0 - by RickOShay
+
+LEGAL STUFF: You may use these scripts in your mission - full attribution must given on Steam Workshp submission and in your mission.
+Likewise if you modify any / all of these scripts or use them in derivative work - attribution must be given in the Steam Workshop submission as well as in the new script and your mission.
+
+USAGE:
+This system works for all units on the player's side or in the player's group see scope below.
+NOTE: ALL PLAYERS MUST BE ON THE SAME SIDE.
+The leader of the group must be a player.
+You must have some AI units on your side or in your group for it to work.
+NB! Vanilla revive system must be enabled for SP and MP.
+
+Ace is not explicitly supported but this script apparently does work with it.
+
+INSTALLATION:
+1. Copy the ROS_AI_revive folder to your mission root.
+2. Add the sound classes to CFGSounds in your description.ext (See sample description.ext file in Example root files folder)
+3. Put the following line in your init.sqf:
+[] execvm "ROS_AI_revive\scripts\ROS_monitorhealth.sqf";
+4. Create a text file in the mission root called: initserver.sqf Place the following code into that file:
+   (This will stop AI respawning when killed)
+
+{
+	_x addMPEventHandler ["MPRespawn", {
+		params ["_unit"];
+		if (!isPlayer _unit) exitWith {
+			deleteVehicle _unit
+		}
+	}]
+} forEach playableUnits;
+
+Please see the ROS_monitorhealth.sqf script header in the ROS_AI_Revive\scripts folder for more details on usage and some additional options.
+
+Designed to work with BIS revive system for players in MP.
+If you have problems please contact me on Steam.
+
+Cheers
+
+ROS
+
+

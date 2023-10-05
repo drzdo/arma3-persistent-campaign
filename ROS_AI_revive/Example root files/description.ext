@@ -1,0 +1,167 @@
+class Header
+{
+	gameType = Coop;
+	minPlayers = 1;
+	maxPlayers = 6;
+};
+
+dev = "RickOShay";
+author = "RickOShay";
+onLoadName = "ROS AI Revive Demo";
+loadScreen = "images\home.jpg";
+OnLoadMission = "";
+
+enableDebugConsole[] = {"76561198024041042"};
+
+// BIS Revive Must be enabled for SP and MP ROS_AIRevive
+respawn = 3;
+respawnDelay = 6;
+ReviveMode = 1;
+ReviveUnconsciousStateMode = 0;
+ReviveRequiredTrait = 0;
+ReviveRequiredItems = 0;
+ReviveRequiredItemsFakConsumed = 0;
+reviveDelay = 6;
+ReviveMedicSpeedMultiplier = 2;
+reviveForceRespawnDelay = 6;
+reviveBleedOutDelay = 600;
+respawnTemplates[] = {"Revive","MenuPosition"};
+respawnOnStart = -1;
+respawnDialog = 1;
+
+class CfgSounds {
+	sounds[] = {};
+
+	class medic1 {
+		name="medic1";
+		sound[]={"ROS_AI_revive\sound\medic1.ogg", 20, 1, 50};
+		titles[] = {};
+	};
+	class medic2 {
+		name="medic2";
+		sound[]={"ROS_AI_revive\sound\medic2.ogg", 20, 1, 50};
+		titles[] = {};
+	};
+	class medic3 {
+		name="medic3";
+		sound[]={"ROS_AI_revive\sound\medic3.ogg", 20, 1, 50};
+		titles[] = {};
+	};
+	class medic4 {
+		name="medic4";
+		sound[]={"ROS_AI_revive\sound\medic4.ogg", 20, 1, 50};
+		titles[] = {};
+	};
+	class medic5 {
+		name="medic5";
+		sound[]={"ROS_AI_revive\sound\medic5.ogg", 20, 1, 50};
+		titles[] = {};
+	};
+	class bepatient {
+		name="bepatient";
+		sound[]={"ROS_AI_revive\sound\bepatient.ogg", 20, 1, 50};
+		titles[] = {};
+	};
+	class medicsbusy {
+		name="medicsbusy";
+		sound[]={"ROS_AI_revive\sound\medicsbusy.ogg", 20, 1, 50};
+		titles[] = {};
+	};
+	class stopvehicle {
+		name="stopvehicle";
+		sound[]={"ROS_AI_revive\sound\stopvehicle.ogg", 20, 1, 50};
+		titles[] = {};
+	};
+	class ontheway {
+		name="ontheway";
+		sound[]={"ROS_AI_revive\sound\ontheway.ogg", 20, 1, 50};
+		titles[] = {};
+	};
+	class memberdied {
+		name="memberdied";
+		sound[]={"ROS_AI_revive\sound\memberdied.ogg", 1, 1, 50};
+		titles[] = {};
+	};
+	class thanks1 {
+		name="thanks1";
+		sound[]={"ROS_AI_revive\sound\thanks1.ogg", 10, 1, 50};
+		titles[] = {};
+	};
+	class thanks2 {
+		name="thanks2";
+		sound[]={"ROS_AI_revive\sound\thanks2.ogg", 10, 1, 50};
+		titles[] = {};
+	};
+	class thanks3 {
+		name="thanks3";
+		sound[]={"ROS_AI_revive\sound\thanks3.ogg", 10, 1, 50};
+		titles[] = {};
+	};
+	class thanks4 {
+		name="thanks4";
+		sound[]={"ROS_AI_revive\sound\thanks4.ogg", 10, 1, 50};
+		titles[] = {};
+	};
+	class thanks5 {
+		name="thanks5";
+		sound[]={"ROS_AI_revive\sound\thanks5.ogg", 10, 1, 50};
+		titles[] = {};
+	};
+	class thanks6 {
+		name="thanks6";
+		sound[]={"ROS_AI_revive\sound\thanks6.ogg", 10, 1, 50};
+		titles[] = {};
+	};
+	class thanks7 {
+		name="thanks7";
+		sound[]={"ROS_AI_revive\sound\thanks7.ogg", 10, 1, 50};
+		titles[] = {};
+	};
+	class thanks8 {
+		name="thanks8";
+		sound[]={"ROS_AI_revive\sound\thanks8.ogg", 10, 1, 50};
+		titles[] = {};
+	};
+	class thanks1AI {
+		name="thanks1AI";
+		sound[]={"ROS_AI_revive\sound\thanks1AI.ogg", 10, 1, 50};
+		titles[] = {};
+	};
+	class thanks2AI {
+		name="thanks2AI";
+		sound[]={"ROS_AI_revive\sound\thanks2AI.ogg", 10, 1, 50};
+		titles[] = {};
+	};
+	class thanks3AI {
+		name="thanks3AI";
+		sound[]={"ROS_AI_revive\sound\thanks3AI.ogg", 10, 1, 50};
+		titles[] = {};
+	};
+	class thanks4AI {
+		name="thanks4AI";
+		sound[]={"ROS_AI_revive\sound\thanks4AI.ogg", 10, 1, 50};
+		titles[] = {};
+	};
+	class thanks5AI {
+		name="thanks5AI";
+		sound[]={"ROS_AI_revive\sound\thanks5AI.ogg", 10, 1, 50};
+		titles[] = {};
+	};
+	class thanks6AI {
+		name="thanks6AI";
+		sound[]={"ROS_AI_revive\sound\thanks6AI.ogg", 10, 1, 50};
+		titles[] = {};
+	};
+	class thanks7AI {
+		name="thanks7AI";
+		sound[]={"ROS_AI_revive\sound\thanks7AI.ogg", 10, 1, 50};
+		titles[] = {};
+	};
+	class thanks8AI {
+		name="thanks8AI";
+		sound[]={"ROS_AI_revive\sound\thanks8AI.ogg", 10, 1, 50};
+		titles[] = {};
+	};
+};
+
+

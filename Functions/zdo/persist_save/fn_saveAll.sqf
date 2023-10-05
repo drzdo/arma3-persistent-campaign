@@ -30,7 +30,8 @@ private _savedData = [
     ["objects", _objects],
     ["mines", call zdo_persist_save_fnc_saveMines],
     ["map", call zdo_persist_save_fnc_copyMapMarkers],
-    ["destroyed_terrain_objects", call zdo_persist_save_fnc_saveDestroyedTerrainObjects]
+    ["destroyed_terrain_objects", call zdo_persist_save_fnc_saveDestroyedTerrainObjects],
+    ["units", call zdo_persist_save_fnc_saveUnits]
 ];
 
 profileNamespace setVariable ["zdo_mission", _savedData];

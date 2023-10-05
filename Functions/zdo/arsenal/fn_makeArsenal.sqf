@@ -23,6 +23,17 @@ private _actionOpen = ["zdo_openArsenal", "Open ACE Arsenal","",{
 
     [_box, _virtualWeapons, true] call ace_arsenal_fnc_addVirtualItems;
 
+    private _eventId = ["ACE_arsenal_displayClosed", {
+        private _freqSwPrefix = "Freq SW ";
+        private _m = allMapMarkers select { [_freqSwPrefix, markerText _x] call BIS_fnc_inString } apply { markerText _x };
+        if (count _m > 0) then {
+            private _s = _m select 0;
+            private _freq = _s select [count _freqSwPrefix];
+            [call TFAR_fnc_activeSwRadio, _freq] call TFAR_fnc_setSwFrequency;
+        };
+    }, []] call CBA_fnc_addEventHandlerArgs;
+    player setVariable ["arsenalEventId", _eventId];
+
     [_box, player] call ace_arsenal_fnc_openBox;
     [_box, true] call ace_arsenal_fnc_removeBox;
 

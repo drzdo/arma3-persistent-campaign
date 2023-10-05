@@ -4,11 +4,16 @@ Potentially, each next respawn can induce bigger penalty.
 Remember about balancing immersiveness and fun.
  */
 
-params ["_unit"];
+params [
+	"_unit",
+	["_bodyPartsCountMinMax", [0, 4]],
+	["_damageMinMax", [0, 1]],
+	["_painMinMax", [0, 0.1]]
+];
 
 private _bodyParts = ["leftarm", "rightarm", "head", "torso", "leftleg", "rightleg"];
 
-private _bodyPartsToDamage = [0, 4] call BIS_fnc_randomInt;
+private _bodyPartsToDamage = _bodyPartsCountMinMax call BIS_fnc_randomInt;
 [_unit, _unit] call ace_medical_treatment_fnc_fullHeal;
 
 private _i = 0;
@@ -17,15 +22,15 @@ while {(_i < _bodyPartsToDamage) && (_i < (count _bodyParts))} do {
 	private _part = _bodyParts select _index;
 	_bodyParts deleteAt _index;
 
-	private _dmg = [0.1, 1.0] call BIS_fnc_randomNum;
+	private _dmg = _damageMinMax call BIS_fnc_randomNum;
 
 	private _dmgType = selectRandom ["stab", "bullet"];
 
 	[_unit, _dmg, _part, _dmgType, _unit] call ace_medical_fnc_addDamageToUnit;
 
-	[_unit, _unit, _part, "FieldDressing"] call ace_medical_treatment_fnc_bandage;
-	[_unit, _unit, _part, "FieldDressing"] call ace_medical_treatment_fnc_bandage;
-	[_unit, _unit, _part, "FieldDressing"] call ace_medical_treatment_fnc_bandage;
+	for "_i" from 0 to 10 do {
+		[_unit, _unit, _part, "FieldDressing"] call ace_medical_treatment_fnc_bandage;
+	};
 
 	[_unit, _unit, _part] call ace_medical_treatment_fnc_splint;
 
@@ -33,5 +38,5 @@ while {(_i < _bodyPartsToDamage) && (_i < (count _bodyParts))} do {
 };
 
 [_unit, false, 0, false] call ace_medical_fnc_setUnconscious;
-[_unit, -1.0] call ace_medical_fnc_adjustPainLevel;
-[_unit, "activity", "Residual wounds after respawn", []] call ace_medical_treatment_fnc_addToLog;
+[_unit, -2.0] call ace_medical_fnc_adjustPainLevel;
+[_unit, _painMinMax call BIS_fnc_randomInt] call ace_medical_fnc_adjustPainLevel;

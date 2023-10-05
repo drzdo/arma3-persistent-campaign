@@ -1,10 +1,31 @@
-#include "Functions\zdo\_mission\inc_description.ext"
+#include "ROS_AI_revive\_mission\description.ext"
 
-Respawn = 3;
-RespawnDelay = 5;
-RespawnDialog = 1;
-respawnOnStart = 0;
+class CfgFunctions
+{
+	#include "Functions\zdo\_mission\cfgFunctions.hpp"
+};
+
+class Header
+{
+	gameType = Coop;
+	minPlayers = 1;
+	maxPlayers = 8;
+};
+
+respawn = 3;
+respawnDelay = 6;
+ReviveMode = 1;
+ReviveUnconsciousStateMode = 0;
+ReviveRequiredTrait = 0;
+ReviveRequiredItems = 0;
+ReviveRequiredItemsFakConsumed = 0;
+reviveDelay = 6;
+ReviveMedicSpeedMultiplier = 2;
+reviveForceRespawnDelay = 6;
+reviveBleedOutDelay = 180;
 respawnTemplates[] = {};
+respawnOnStart = -1;
+respawnDialog = 0;
 
 joinUnassigned = 0;
 briefing = 0;

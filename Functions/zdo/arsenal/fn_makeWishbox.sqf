@@ -33,10 +33,10 @@ private _actionWishbox = ["zdo_wishboxSaveLoadout", "Make a wish with ACE Arsena
         player setUnitLoadout _loadout;
         hint "Wishlist saved";
 
-        _eventId = player getVariable ["arsenalEventId", -1];
+        _eventId = player getVariable ["wishboxEventId", -1];
         ["ACE_arsenal_displayClosed", _eventId] call CBA_fnc_removeEventHandler;
     }, [_box, _loadout]] call CBA_fnc_addEventHandlerArgs;
 
-    player setVariable ["arsenalEventId", _eventId];
+    player setVariable ["wishboxEventId", _eventId];
 },{true}] call ace_interact_menu_fnc_createAction;
 [_box, 0, ["ACE_MainActions"], _actionWishbox, true] call ace_interact_menu_fnc_addActionToObject;

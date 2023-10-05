@@ -1,0 +1,37 @@
+Ver 4.0
+A major improvement to performance and reliability. 
+Autorecover is now on by default - AI that are incapacitated will auto recover after 5 mins if they arent revivedduring that time. This feature can be toggeled off - see ROS_monitorhealth.sqf header for options. The medic reassignment process has been totally rewritten. AI medics now have 15 secs + travel time (running speed) - to respond - failing that the medic and incap unit will be removed from the processing queue and reset and a new AI will then be assigned to revive the unit.  
+Overall AI responsiveness and FPS/server load is significantly better (~20 fps gain). 
+
+Ver 3.0
+Added a number of improvements: (See ROS_MonitorHealth header for options)
+Allow you to switch off moan sfx and medic speech
+Adjust incapacitated max time out
+Allow use of smoke cover whilst healing
+Change smoke colour if used
+Improved optional AI unstick option (in instances where AI enter buildings with broken path lod)
+All you to switch off custom radio messages whilst waiting to be healed
+
+Ver 2.5
+Improved the smoothness of AI approaching and positioning relative to the downed unit 
+(still not 100% if unit when assigned is very close to the hurt unit)
+Added additional configurable options
+Optionally allow incapacitated units to auto recover after down time elapsed - or die.
+Optionally allow radio status message while waiting for medic
+Optionally allow AI medic to make audio comments during revive
+Modified Captive blacklist - units to be excluded from revive system 
+Fixed wrong voice used in successive callouts
+Improved performance slightly
+ 
+Ver 2.0
+Improved ability for players to revive nearest unit
+Added 3D marker for players to locate assigned nearest downed AI unit 
+Added delay window before reassignment of downed unit 
+Added optional AI stuck relocation to safe position if no movement after 120secs and fallen behind dist >200m 
+Added optional AI self recovery after 5 minutes 
+
+Added ability to add spawned units into the array of units that will be healed 
+- via: 	call ROS_unitArrayEHupdate_fnc; 
+It is called each time a group spawns in.
+  
+Added opional ability to exclude players from being revived by AI
